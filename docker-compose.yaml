@@ -1,0 +1,50 @@
+services:
+  avalanche:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+    image: avalanche-cli
+    container_name: avalanche-cli-container
+    restart: always
+    volumes:
+      - ./data:/root/.avalanche-cli
+      - ./.env:/.env
+      - ./start_network.sh:/start_network.sh
+      - ./stop_network.sh:/stop_network.sh
+    ports:
+      - "9650:9650"
+      - "9651:9651"
+      - "9652:9652"
+      - "9653:9653"
+      - "9750:9750"
+    networks:
+      default:
+        ipv4_address: 172.0.0.3
+    command: [ "bash", "-c", "while :; do sleep 10; done" ]
+
+  proxy-9650:
+    image: alpine/socat
+    command: tcp-listen:9650,fork,reuseaddr tcp-connect:avalanche:9650
+    restart: always
+    ports:
+      - "9654:9650"
+    depends_on:
+      - avalanche
+
+  proxy-9750:
+    image: alpine/socat
+    command: tcp-listen:9750,fork,reuseaddr tcp-connect:avalanche:9750
+    restart: always
+    ports:
+      - "9655:9750"
+    depends_on:
+      - avalanche
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.0.0.0/24

@@ -1,0 +1,1 @@
+/avalanche blockchain deploy myl1s --local --endpoint http://127.0.0.1:9650 --avalanchego-version v1.13.0 --http-port 9750

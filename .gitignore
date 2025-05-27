@@ -1,0 +1,14 @@
+# ignore all files in avalanche-cli directory
+avalanche-cli/*
+
+# ignore all files in data directory
+data/*
+
+.DS_Store
+
+# ignore all files in .env directory
+.env
+
+# data
+data/*
+myl1s-data/*
