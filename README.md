@@ -12,7 +12,6 @@
 ├── start_network.sh    # 启动网络脚本
 ├── stop_network.sh     # 停止网络脚本
 └── data/               # 持久化数据目录
-└── myl1s-data/         # myl1s持久化数据目录
 ```
 
 ## 环境要求
@@ -122,7 +121,7 @@
 ### docker-compose.yaml
 
 - 使用自定义网络 172.0.0.0/24
-- 数据持久化存储在`./data`和`./myl1s-data`目录
+- 数据持久化存储在`./data`目录
 - 支持代理配置（默认注释）
 
 ## 常用操作
