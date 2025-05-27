@@ -14,6 +14,7 @@ services:
       - ./.env:/.env
       - ./start_network.sh:/start_network.sh
       - ./stop_network.sh:/stop_network.sh
+      - ./deploy_myl1s.sh:/deploy_myl1s.sh
     ports:
       - "9650:9650"
       - "9651:9651"
@@ -24,24 +25,6 @@ services:
       default:
         ipv4_address: 172.0.0.3
     command: [ "bash", "-c", "while :; do sleep 10; done" ]
-
-  proxy-9650:
-    image: alpine/socat
-    command: tcp-listen:9650,fork,reuseaddr tcp-connect:avalanche:9650
-    restart: always
-    ports:
-      - "9654:9650"
-    depends_on:
-      - avalanche
-
-  proxy-9750:
-    image: alpine/socat
-    command: tcp-listen:9750,fork,reuseaddr tcp-connect:avalanche:9750
-    restart: always
-    ports:
-      - "9655:9750"
-    depends_on:
-      - avalanche
 
 networks:
   default:
